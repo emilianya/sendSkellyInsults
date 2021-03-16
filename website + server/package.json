@@ -1,0 +1,11 @@
+{
+  "name": "sendskellyinsults",
+  "version": "1.0.0",
+  "description": "Send push notifications to my phone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vtheskeleton",
+  "license": "ISC"
+}

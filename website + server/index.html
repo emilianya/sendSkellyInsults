@@ -1,0 +1,114 @@
+<html>
+    <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    </head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <style>
+        html {
+        	font-family: Abel;
+          background-color: #1E1E1E;
+          color: #FFFFFF;
+		}
+input[type=text] {
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #3498eb;
+  background-color:#373c42;
+  color: #FFFFFF;
+  border-radius: 4px;
+  outline: none;
+  font-family: Abel;
+}
+input[type=text]:focus {
+  outline: none;
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #40a8ff;
+  border-radius: 4px;
+  font-family: Abel;
+}
+button {
+  height:43px;
+  outline: none;
+  background-color: #373c42;
+  border-radius: 4px;
+  border: 2px solid #3498eb;
+  color: #FFFFFF;
+  font-family: Abel;
+}
+
+button:focus {
+  height:43px;
+  outline: none;
+  background-color: #373c42;
+  border-radius: 4px;
+  border: 2px solid #40a8ff;
+  font-family: Abel;
+}
+#msgSent {
+  position: absolute;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  bottom: 10px;
+  width: 25%;
+  height:10%;
+  background-color: #8AC007;
+  color:white;
+  border: 5px solid #8AC007;
+  border-radius: 4px;
+  visibility: show;
+  overflow: hidden;
+}
+a {
+  color:#40a8ff;
+}
+.hideMsg {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
+}
+    </style>
+    <body>
+        <h1>Welcome to SendSkellyInsults™</h1>
+         <p><strong>Anything</strong> you write here will be sent to Skelly's phone as a push notification</p>
+         <p>You can send anything and I won't have any idea who sent it. If I like what you send me, I might pin it on the <a href="/hallOfFame">Hall of Fame</a>.</p>
+        <input id="textBox" type="text" placeholder="Write an insult here"/>
+       
+        <button onClick="sendNotification()">Send Insult</button>
+
+        <div id="msgSent" class="hideMsg" style="float:left; float:bottom;" >Woo!</div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
+<script>
+  var socket = io({});
+</script>
+    </body>
+    <script>
+        function sendNotification() {
+            var user
+            let url = "/sendNotification"
+            let message = document.getElementById("textBox").value
+            let data = { message: message }
+            $.post(url,data, (data, status) => {
+                console.log(data);
+                $("#textBox")[0].value = ""
+                var msgsent = document.getElementById("msgSent")
+                msgsent.innerHTML = "Message sent: " + message + "<br>Wait 3 seconds to send another message."
+                msgsent.classList.remove("hideMsg")
+                document.querySelector("button").disabled = true
+                setTimeout(whenthewoo, 3000)
+                function whenthewoo() {
+                    msgsent.classList.add("hideMsg")
+                    document.querySelector("button").disabled = false
+                }
+            })
+        }
+    </script>
+</html> 
