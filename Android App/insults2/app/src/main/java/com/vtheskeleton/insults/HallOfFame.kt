@@ -16,7 +16,6 @@ class HallOfFame : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent) {
         socket = IO.socket("http://insults.skelly.xyz")
         socket.connect()
-        //socket.emit("fame", "{\"password\":\"SkellyIsCool\", \"message\": \"" + piss + "\"}")
 
         socket.emit("fame", "{\"password\":\"null\", \"message\": \"" + intent.action.toString() + "\"}")
         Toast.makeText(context, intent.getStringExtra("message").toString(), Toast.LENGTH_LONG).show();
